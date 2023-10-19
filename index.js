@@ -75,12 +75,20 @@ async function run() {
 
     // user related apis
 
+    app.get('/user', async(req, res) =>{
+      const cursor = userCollection.find();
+      const users = await cursor.toArray();
+      res.send(users)
+     
+  })
     app.post('/user', async(req, res) =>{
       const user = req.body;
       console.log(user);
       const result = await userCollection.insertOne(user);
       res.send(result);
   })
+
+  
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });

@@ -28,7 +28,12 @@ async function run() {
     await client.connect();
 
     const productCollection = client.db('productDB').collection('product');
+
+    const brandCollection = client.db('brandDB').collection('brand');
+
+
     const userCollection = client.db('productDB').collection('user');
+
     app.get('/product', async (req, res) => {
       const cursor = productCollection.find();
       const result = await cursor.toArray();
@@ -79,6 +84,33 @@ async function run() {
       const result = await productCollection.deleteOne(filter);
       res.send(result);
   })
+
+  // brand related
+
+  // app.get('/brand', async (req, res) => {
+  //   const cursor = brandCollection.find();
+  //   const result = await cursor.toArray();
+  //   res.send(result);
+
+  // })
+  // app.get('/brand/:id', async (req, res) => {
+  //   const id = req.params.id;
+  //   const query = { _id: new ObjectId(id) }
+  //   const result = await brandCollection.findOne(query);
+  //   res.send(result);
+
+
+  // })
+
+  app.post('/brand', async (req, res) => {
+    const newBrand = req.body;
+    console.log(newBrand);
+    const result = await brandCollection.insertOne(newBrand);
+    res.send(result);
+
+  })
+
+ 
 
     // user related apis
 
